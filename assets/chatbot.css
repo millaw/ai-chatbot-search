@@ -1,0 +1,15 @@
+#chatbot-container {
+    width: 100%;
+    max-width: 500px;
+    margin: auto;
+    text-align: center;
+    padding: 10px;
+}
+input, button {
+    padding: 10px;
+    margin: 5px;
+}
+#chatbot-response, #chatbot-results {
+    text-align: left;
+    margin-top: 10px;
+}
