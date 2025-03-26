@@ -51,3 +51,10 @@ To use OpenAI for chatbot responses, you need an API key:
 ## License
 This project is licensed under the **GPLv3** License.
 
+## Credits
+- Developed by Milla Wynn.
+- Plugin uses WordPress functions and API for integration.
+
+## Support
+If you encounter any issues or have questions about the plugin, please open an issue on the [GitHub repository](https://github.com/millaw).
+
