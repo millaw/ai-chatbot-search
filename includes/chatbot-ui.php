@@ -21,7 +21,7 @@ class AI_Chatbot_UI {
             array(),
             AI_CHATBOT_VERSION
         );
-        
+
         wp_register_script(
             'ai-chatbot-js',
             AI_CHATBOT_PLUGIN_URL . 'assets/chatbot.js',
@@ -29,11 +29,14 @@ class AI_Chatbot_UI {
             AI_CHATBOT_VERSION,
             true
         );
-        
+
         wp_localize_script('ai-chatbot-js', 'ai_chatbot_vars', array(
             'ajax_url' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce('ai_chatbot_nonce')
         ));
+
+        wp_enqueue_style('ai-chatbot-css');
+        wp_enqueue_script('ai-chatbot-js');
     }
     
     public function chatbot_shortcode($atts) {
