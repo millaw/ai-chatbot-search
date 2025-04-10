@@ -4,7 +4,7 @@ class AI_Chatbot_API {
     private $openai_key;
     
     private function __construct() {
-        $this->openai_key = get_option('ai_chatbot_openai_key');
+        $this->openai_key = $this->decrypt_key(get_option('ai_chatbot_openai_key'));
         
         add_action('wp_ajax_ai_chatbot_query', array($this, 'handle_chatbot_query'));
         add_action('wp_ajax_nopriv_ai_chatbot_query', array($this, 'handle_chatbot_query'));
@@ -19,17 +19,27 @@ class AI_Chatbot_API {
         }
         return self::$instance;
     }
+
+    private function encrypt_key($key) {
+        return base64_encode($key);
+    }
+
+    private function decrypt_key($key) {
+        return base64_decode($key);
+    }
     
     public function register_settings() {
-        register_setting('ai_chatbot_options', 'ai_chatbot_openai_key');
-        
+        register_setting('ai_chatbot_options', 'ai_chatbot_openai_key', array(
+            'sanitize_callback' => array($this, 'encrypt_key')
+        ));
+
         add_settings_section(
             'ai_chatbot_settings_section',
             'API Settings',
             array($this, 'settings_section_callback'),
             'ai_chatbot_options'
         );
-        
+
         add_settings_field(
             'ai_chatbot_openai_key',
             'OpenAI API Key',
@@ -44,7 +54,7 @@ class AI_Chatbot_API {
     }
     
     public function openai_key_callback() {
-        $key = get_option('ai_chatbot_openai_key');
+        $key = $this->decrypt_key(get_option('ai_chatbot_openai_key'));
         echo '<input type="password" id="ai_chatbot_openai_key" name="ai_chatbot_openai_key" value="' . esc_attr($key) . '" class="regular-text">';
     }
     
