@@ -12,7 +12,7 @@
 defined('ABSPATH') or die('Direct access not allowed');
 
 // Define plugin constants
-define('AI_CHATBOT_VERSION', '1.0.0');
+define('AI_CHATBOT_VERSION', '1.0.1');
 define('AI_CHATBOT_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('AI_CHATBOT_PLUGIN_URL', plugin_dir_url(__FILE__));
 
@@ -34,7 +34,22 @@ function ai_chatbot_activate() {
 register_deactivation_hook(__FILE__, 'ai_chatbot_deactivate');
 
 function ai_chatbot_deactivate() {
-    // Clean up if needed
+    // Remove the OpenAI API key from the database
+    delete_option('ai_chatbot_openai_key');
+
+    // Optionally, clean up any other plugin-specific settings or data
+    // For example, remove custom database tables or transient data if created
+    global $wpdb;
+
+    // Remove custom database tables if created
+    $table_name = $wpdb->prefix . 'ai_chatbot_data';
+    $wpdb->query("DROP TABLE IF EXISTS $table_name");
+
+    // Delete transient data if any
+    $transients = $wpdb->get_results("SELECT option_name FROM $wpdb->options WHERE option_name LIKE '_transient_ai_chatbot_%'");
+    foreach ($transients as $transient) {
+        delete_option($transient->option_name);
+    }
 }
 
 // Initialize the plugin
