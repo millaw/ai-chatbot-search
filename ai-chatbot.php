@@ -3,7 +3,7 @@
  * Plugin Name: AI Chatbot Search
  * Plugin URI: https://github.com/millaw/ai-chatbot-search
  * Description: AI-powered chatbot that helps users find relevant content on your WordPress site.
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author: Milla Wynn
  * Author URI: https://github.com/millaw
  * License: GPLv3
